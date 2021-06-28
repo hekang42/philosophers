@@ -2,6 +2,8 @@
 	"files.associations": {
 		"*.html": "html",
 		"philo.h": "c",
-		"iterator": "c"
+		"iterator": "c",
+		"pthread.h": "c",
+		"time.h": "c"
 	}
 }

@@ -6,13 +6,13 @@
 /*   By: hekang <hekang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 17:34:24 by hekang            #+#    #+#             */
-/*   Updated: 2021/06/28 20:04:51 by hekang           ###   ########.fr       */
+/*   Updated: 2021/06/28 20:37:09 by hekang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-unsigned long		get_time()
+unsigned long		get_time(void)
 {
 	unsigned long	result;
 	struct timeval	current;
@@ -30,10 +30,10 @@ unsigned long		calc_time(struct timeval time)
 	return (result);
 }
 
-int			eat_all(t_data *data)
+int					eat_all(t_data *data)
 {
-	int		result;
-	int		cnt;
+	int				result;
+	int				cnt;
 
 	result = 0;
 	cnt = -1;
@@ -45,11 +45,11 @@ int			eat_all(t_data *data)
 	return (1);
 }
 
-void			*monitor(void *arg)
+void				*monitor(void *arg)
 {
-	t_philo		*philo;
-	int			cnt;
-	unsigned long		current;
+	t_philo			*philo;
+	int				cnt;
+	unsigned long	current;
 
 	philo = (t_philo *)arg;
 	while (1)
@@ -59,7 +59,8 @@ void			*monitor(void *arg)
 		usleep(100);
 		while (++cnt < philo->data->input[number_of_philos])
 		{
-			if ((int)(current - calc_time(philo[cnt].last_eat_time)) > philo->data->input[time_to_die])
+			if ((int)(current - calc_time(philo[cnt].last_eat_time)) >
+				philo->data->input[time_to_die])
 			{
 				philo[cnt].dead = 1;
 				print_philo(philo, 4);

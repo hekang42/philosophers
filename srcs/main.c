@@ -6,34 +6,11 @@
 /*   By: hekang <hekang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 11:28:06 by hekang            #+#    #+#             */
-/*   Updated: 2021/06/28 20:06:38 by hekang           ###   ########.fr       */
+/*   Updated: 2021/06/28 20:43:12 by hekang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void *thread(void *vargp);
-
-void			exit_with_free(t_data *result)
-{
-	free(result);
-	write(2, "Error: Wrong ARGS\n", 19);
-	exit(1);
-}
-
-int				is_digit_string(char *str)
-{
-	int			cnt;
-
-	cnt = 0;
-	while (str[cnt])
-	{
-		if (str[cnt] < '0' || str[cnt] > '9')
-			return (0);
-		cnt++;
-	}
-	return (1);
-}
 
 t_data			*get_data(char **argv)
 {
@@ -55,7 +32,8 @@ int				init_philos(t_data *data)
 {
 	int			cnt;
 
-	data->philo = (t_philo *)malloc(sizeof(t_philo) * data->input[number_of_philos]);
+	data->philo = (t_philo *)malloc(sizeof(t_philo) *
+		data->input[number_of_philos]);
 	data->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
 		* data->input[number_of_philos]);
 	cnt = -1;
@@ -63,14 +41,14 @@ int				init_philos(t_data *data)
 	{
 		pthread_mutex_init(&data->forks[cnt], NULL);
 		if (cnt == 0)
-			data->philo[cnt].left = &data->forks[data->input[number_of_philos] - 1];
+			data->philo[cnt].left = &data->forks[
+					data->input[number_of_philos] - 1];
 		else
 			data->philo[cnt].left = &data->forks[cnt - 1];
 		data->philo[cnt].right = &data->forks[cnt];
 		data->philo[cnt].data = data;
 		data->philo[cnt].eat_count = 0;
 		data->philo[cnt].dead = 0;
-		// pthread_create(&philos[cnt].thread, NULL, t_function, )
 	}
 	pthread_mutex_init(&data->msg, NULL);
 	return (0);
@@ -86,21 +64,22 @@ void			create_philos(t_data *data)
 	while (++cnt < data->input[number_of_philos])
 	{
 		if (cnt % 2)
-			usleep(1);
+			usleep(100);
 		data->philo[cnt].n = cnt;
 		data->philo[cnt].data = data;
 		data->philo[cnt].last_eat_time = data->start_time;
-		pthread_create(&data->philo[cnt].thread, NULL, philo, &data->philo[cnt]);
+		pthread_create(&data->philo[cnt].thread, NULL,
+			philo, &data->philo[cnt]);
 		pthread_detach(data->philo[cnt].thread);
 	}
 	pthread_create(&p, NULL, monitor, data->philo);
 	pthread_join(p, NULL);
 }
 
-int				main(int argc, char **argv)                                  /* 메인 스레드가 시작되었다 */
+int				main(int argc, char **argv)
 {
 	t_data		*data;
-	
+
 	if (!(argc == 5) && !(argc == 6))
 		return (0);
 	data = get_data(argv);
