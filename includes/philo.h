@@ -6,7 +6,7 @@
 /*   By: hekang <hekang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 14:11:33 by hekang            #+#    #+#             */
-/*   Updated: 2021/06/28 14:26:02 by hekang           ###   ########.fr       */
+/*   Updated: 2021/06/28 19:41:08 by hekang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ enum philo {
 	number_of_philos = 1,
 	time_to_die,
 	time_to_eat,
-	time_to_sleep
+	time_to_sleep,
+	must_eat_count
 };
 
 typedef struct s_data
@@ -32,6 +33,7 @@ typedef struct s_data
 	struct timeval	start_time;
 	t_philo			*philo;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	msg;
 
 }				t_data;
 
@@ -43,7 +45,12 @@ typedef struct	s_philo
 	pthread_t		thread;
 	struct timeval	last_eat_time;
 	t_data			*data;
+	int				eat_count;
+	int				dead;
 }					t_philo;
 int			ft_atoi(const char *str);
 void		*philo(void *argv);
+void		*monitor(void *arg);
+void		print_philo(t_philo *philo, int type);
+
 

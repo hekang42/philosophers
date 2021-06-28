@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"*.html": "html",
-		"philo.h": "c"
+		"philo.h": "c",
+		"iterator": "c"
 	}
 }

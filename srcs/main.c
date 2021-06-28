@@ -6,7 +6,7 @@
 /*   By: hekang <hekang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 11:28:06 by hekang            #+#    #+#             */
-/*   Updated: 2021/06/28 14:30:45 by hekang           ###   ########.fr       */
+/*   Updated: 2021/06/28 20:06:38 by hekang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,25 +68,33 @@ int				init_philos(t_data *data)
 			data->philo[cnt].left = &data->forks[cnt - 1];
 		data->philo[cnt].right = &data->forks[cnt];
 		data->philo[cnt].data = data;
+		data->philo[cnt].eat_count = 0;
+		data->philo[cnt].dead = 0;
 		// pthread_create(&philos[cnt].thread, NULL, t_function, )
 	}
+	pthread_mutex_init(&data->msg, NULL);
 	return (0);
 }
 
 void			create_philos(t_data *data)
 {
 	int			cnt;
+	pthread_t	p;
 
 	cnt = -1;
 	gettimeofday(&data->start_time, NULL);
 	while (++cnt < data->input[number_of_philos])
 	{
 		if (cnt % 2)
-			usleep(1000);
+			usleep(1);
 		data->philo[cnt].n = cnt;
+		data->philo[cnt].data = data;
 		data->philo[cnt].last_eat_time = data->start_time;
 		pthread_create(&data->philo[cnt].thread, NULL, philo, &data->philo[cnt]);
+		pthread_detach(data->philo[cnt].thread);
 	}
+	pthread_create(&p, NULL, monitor, data->philo);
+	pthread_join(p, NULL);
 }
 
 int				main(int argc, char **argv)                                  /* 메인 스레드가 시작되었다 */
@@ -98,6 +106,5 @@ int				main(int argc, char **argv)                                  /* 메인 �
 	data = get_data(argv);
 	init_philos(data);
 	create_philos(data);
-	while (1);
 	return (1);
 }
