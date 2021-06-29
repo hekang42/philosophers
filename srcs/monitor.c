@@ -6,7 +6,7 @@
 /*   By: hekang <hekang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 17:34:24 by hekang            #+#    #+#             */
-/*   Updated: 2021/06/28 20:37:09 by hekang           ###   ########.fr       */
+/*   Updated: 2021/06/29 11:06:39 by hekang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int					eat_all(t_data *data)
 	cnt = -1;
 	while (++cnt < data->input[number_of_philos])
 	{
+		usleep(1000);
 		if (data->philo[cnt].eat_count < data->input[must_eat_count])
 			return (0);
 	}
@@ -55,20 +56,20 @@ void				*monitor(void *arg)
 	while (1)
 	{
 		cnt = -1;
-		current = get_time();
-		usleep(100);
 		while (++cnt < philo->data->input[number_of_philos])
 		{
+			current = get_time();
 			if ((int)(current - calc_time(philo[cnt].last_eat_time)) >
 				philo->data->input[time_to_die])
 			{
-				philo[cnt].dead = 1;
+				philo[cnt].data->end = 1;
 				print_philo(philo, 4);
 				return (0);
 			}
-			if (philo->data->input[must_eat_count] != 0)
-				if (eat_all(philo->data))
+			if (philo->data->input[must_eat_count] != -1)
+				if (((philo[cnt].data->end) = (eat_all(philo->data))) == 1)
 					return (0);
+			usleep(100);
 		}
 	}
 }

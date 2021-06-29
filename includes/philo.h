@@ -6,7 +6,7 @@
 /*   By: hekang <hekang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 14:11:33 by hekang            #+#    #+#             */
-/*   Updated: 2021/06/28 20:43:19 by hekang           ###   ########.fr       */
+/*   Updated: 2021/06/29 09:48:05 by hekang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct			s_data
 	t_philo				*philo;
 	pthread_mutex_t		*forks;
 	pthread_mutex_t		msg;
+	int					end;
 }						t_data;
 
 struct					s_philo

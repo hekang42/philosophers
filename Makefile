@@ -6,7 +6,7 @@
 #    By: hekang <hekang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/14 00:08:03 by hekang            #+#    #+#              #
-#    Updated: 2021/06/28 20:40:17 by hekang           ###   ########.fr        #
+#    Updated: 2021/06/29 10:04:42 by hekang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ NAME	= philo
 
 GCC 	= GCC
 GCCFLAG = -Wall -Werror -Wextra -g
-#  -fsanitize=address
+# -fsanitize=address
 RM 		= rm -f
 
 %.o:		%.c
